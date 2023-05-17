@@ -90,14 +90,43 @@ class Planets(Base):
     created = Column(String(30), nullable=False)
     edited = Column(String(30), nullable=False)
     url = Column(String(30), nullable=False)
+    people_id = relationship("People")
 
-class Cast(Base):
-    __tablename__ = 'cast'
+
+class User(Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    film_id = Column(Integer, ForeignKey("films.id"))
-    film = relationship("Films", backref="cast")
-    people_id = Column(Integer, ForeignKey("people_id"))
-    people = relationship("people")
+    name = Column(String(20), nullable=False)
+    email = Column(String(30), nullable=False)
+
+
+class Favorites_planets(Base):
+    __tablename__ = 'favorites_planets'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    planets_id = Column(Integer, ForeignKey('planets.id'))
+
+    
+class Favorites_people(Base):
+    __tablename__ = 'favorites_people'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    people_id = Column(Integer, ForeignKey('people.id'))
+
+
+class Favorites_vehicles(Base):
+    __tablename__ = 'favorites_vehicles'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    vehicles_id = Column(Integer, ForeignKey('vehicles.id'))
+
+
+class Favorites_films(Base):
+    __tablename__ = 'favorites_films'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    films_id = Column(Integer, ForeignKey('films.id'))
+
 
     def to_dict(self):
         return {}
